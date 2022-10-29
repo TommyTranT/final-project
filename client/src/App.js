@@ -23,9 +23,9 @@ function App() {
   return (
     <div className='App'>
       <h1>Wish List App</h1>
-      {cats.length ? cats.map(cat => <li>{cat}</li>) : <h2>Loading</h2>}
+      {cats.length ? cats.map((cat,i) => <li key={i}>{cat}</li>) : <h2>Loading</h2>}
       
-      {users.length ? users.map(user => <li>{user}</li>) : <h2>Loading</h2>}
+      {users.length ? users.map((user,y) => <li key={y}>{user}</li>) : <h2>Loading</h2>}
     </div>
   );
 }
