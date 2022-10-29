@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/', (req, res) => {
+  const users = ['tommytran', 'ryan']
+  // ^ This would be our databass call...
+  res.json(users);
 });
 
 module.exports = router;
