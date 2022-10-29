@@ -6,6 +6,7 @@ Server is the Express app
 
 - nodeJS
 - psql
+- axios
 
 # Installation instructions
 
