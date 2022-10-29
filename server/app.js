@@ -17,4 +17,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+// Get data array from this route
+app.get('/cats', (req, res) => {
+  const cats = ['Hello Kitty', 'Garfield', 'Frits']
+  // ^ This would be our databass call...
+  res.json(cats);
+});
+
 module.exports = app;
