@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const users = require('../db/queries/users');
 
+/* GET users listing. */
 router.get('/', (req, res) => {
-  const users = ['tommytran', 'ryan']
-  // ^ This would be our databass call...
-  res.json(users);
+  users.getAllUsers().then(data => {
+    console.log(data);
+    res.json({users: data});
+  })
 });
 
 module.exports = router;
