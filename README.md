@@ -15,3 +15,8 @@ go into client `npm install`
 
 open 2 terminals `npm start`
 
+# Database
+
+Open psql and make a database called `final`
+run `npm db:rest` to execute schema and seeds. 
+
