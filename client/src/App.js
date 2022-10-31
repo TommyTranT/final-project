@@ -1,6 +1,8 @@
 import './App.css';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import Login from './Login'
+import Register from './Register'
 
 function App() {
   const [cats, setCats] = useState([]);
@@ -20,12 +22,14 @@ function App() {
     })
   }, [])
 
+
+  // <h1>Wish List App</h1>
+  // {cats.length ? cats.map((cat, i) => <li key={i}>{cat}</li>) : <h2>Loading</h2>}
+
+  // {users.length ? users.map((user, y) => <li key={y}>{user}</li>) : <h2>Loading</h2>}
   return (
     <div className='App'>
-      <h1>Wish List App</h1>
-      {cats.length ? cats.map((cat,i) => <li key={i}>{cat}</li>) : <h2>Loading</h2>}
-      
-      {users.length ? users.map((user,y) => <li key={y}>{user}</li>) : <h2>Loading</h2>}
+      <Login />
     </div>
   );
 }
