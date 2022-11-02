@@ -9,3 +9,7 @@ CREATE TABLE items (
   price INTEGER NOT NULL,
   wishlist_id INTEGER NOT NULL REFERENCES wishlists(id) ON DELETE CASCADE NOT NULL
 );
+
+-- Alternative. save as binary data or third party api that creates image url. clould flare images
+-- storing it in a seperate database
+-- check other apis downloads, starts, documentation

@@ -26,12 +26,15 @@ function App() {
   // <h1>Wish List App</h1>
   // {cats.length ? cats.map((cat, i) => <li key={i}>{cat}</li>) : <h2>Loading</h2>}
 
-  // {users.length ? users.map((user, y) => <li key={y}>{user}</li>) : <h2>Loading</h2>}
   return (
     <div className='App'>
-      <Login />
+      <Register />
+      {/* {users.length ? users.map((user, y) => <li key={y}>{user}</li>) : <h2>Loading</h2>} */}
+
     </div>
   );
 }
 
 export default App;
+
+// track with state or cookies. than redirect with router
