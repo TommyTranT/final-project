@@ -10,4 +10,12 @@ router.get('/', (req, res) => {
   })
 });
 
+// Register a new user
+router.post('/', (req, res) => {
+  users.registerNewUser().then(data => {
+    console.log(data);
+    res.json({users: data});
+  })
+});
+
 module.exports = router;

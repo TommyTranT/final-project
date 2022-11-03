@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import axios from 'axios';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -17,6 +18,8 @@ const Register = () => {
   const [validMatch, setValidMatch] = useState(false);
 
   const [errMsg, setErrMsg] = useState('');
+
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     userRef.current.focus();
@@ -38,6 +41,13 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
   }
+
+  useEffect(() => {
+    axios.get('/users').then(res => {
+      console.log(res.data);
+      setUsers(res.data);
+    })
+  }, [])
 
   return (
 
@@ -79,7 +89,7 @@ const Register = () => {
           required
         />
 
-        <button>Sign Up</button>
+        <button >Sign Up</button>
       </form>
       <p>
         Already registered?<br />

@@ -12,4 +12,24 @@ const getUserById = id => {
 	})
 }
 
-module.exports = {getAllUsers, getUserById}
+const registerNewUser = function(user) {
+  return pool
+    .query(`
+      INSERT INTO users (name, password)
+      VALUES ($1, $2)
+      RETURNING *
+      `, [user.email, user.password]
+    )
+    .then((result) => {
+      if (result.rows[0]) {
+        return Promise.resolve(result.rows[0]);
+      } else {
+        return null;
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+}
+
+module.exports = {getAllUsers, getUserById, registerNewUser}
