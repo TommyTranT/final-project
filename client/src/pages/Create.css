@@ -1,0 +1,13 @@
+.createWishlist {
+  border-radius: 25px;
+  /* width: 100%; */
+  margin-top: 5%;
+  margin-left: 10%;
+  max-width: 420px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 1rem;
+  background-color: black;
+}
