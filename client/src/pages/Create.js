@@ -4,25 +4,24 @@ function Create() {
   return (
     <div>
       <section>
-        <form>
+        <form method="POST" action='http://localhost:8080'>
           <label for="title">Enter Wishlist Name</label>
-          <input type="text" className='newWishlist' />
+          <input type="text" className='newWishlist' name='title' />
 
           <br />
-          <label for="title">Enter Wishlist Url:</label>
-          <input type="text" className='newWishlist' />
+          <label for="url">Enter Wishlist Url:</label>
+          <input type="text" className='newWishlist' name='url' />
           <br />
-          <label for="title">Enter a description:</label>
-          <input type="text" className='newWishlist' />
+          <label for="description">Enter a description:</label>
+          <input type="text" className='newWishlist' name='description' />
           <br />
-          <label for="title">Enter image url:</label>
-          <input type="text" className='newWishlist' />
+          <label for="imgUrl">Enter image url:</label>
+          <input type="text" className='newWishlist' name='imgUrl' />
           <br />
-          <label for="title">Enter a price:</label>
-          <input type="text" className='newWishlist' />
+          <label for="price">Enter a price:</label>
+          <input type="text" className='newWishlist' name='price' />
           <br />
-          //add onclick event handler to the button to submit the data to the url, then display all objects on a wishlist page
-          <button>Submit</button>
+          <button type='submit'> Submit </button>
         </form>
       </section>
     </div>

@@ -23,6 +23,25 @@ body {
   padding: 1rem 0.5rem;
 }
 
+.Profile {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end; 
+  align-items: start;
+  min-height: 100vh; 
+  padding: 1rem 0.5rem;
+  margin-top: -80px;
+}
+
+.Profile img {
+  height: 3rem;
+}
+.ProfileInfo {
+  display: flex;
+  flex-direction: row;
+}
+
+
 section {
     width: 100%;
     max-width: 420px;
@@ -32,6 +51,13 @@ section {
     justify-content: flex-start;
     padding: 1rem;
     background-color: rgba(0,0,0,0.4);
+}
+
+.Logout {
+  padding-left: 15px;
+  height: 3rem;
+  width: 6rem;
+  margin-top: -27px;
 }
 
 

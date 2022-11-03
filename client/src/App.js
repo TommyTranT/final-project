@@ -87,32 +87,39 @@ function App() {
 
   // add this into the home one 
   // <Route path='/' exact component={home} />
+  // {Object.keys(user).length != 0 &&
+  //   <Navbar />
+  // }
+
+  let classChange = Object.keys(user).length != 0
+  // <img src={user.picture}></img>
   return (
     <div className='home'>
       <Router>
-        {Object.keys(user).length != 0 &&
-          <Navbar />
-        }
+        <Navbar />
         <Switch>
           <Route path='/' />
         </Switch>
       </Router>
-      <div className='App'>
+      <div className={Object.keys(user).length !== 0 ? "Profile" : "App"} >
+
         <div id="signInDiv">
         </div>
-        {Object.keys(user).length != 0 &&
-          <button onClick={(e) => handleSignOut(e)}>Sign Out</button>
-        }
+
 
         {
           user &&
-          <div>
-            <img src={user.picture}></img>
-            <h3>{user.name}</h3>
+          <div className='ProfileInfo'>
+            <h2>{user.name}</h2>
           </div>
         }
+        <div className='Logout'>
+          {Object.keys(user).length != 0 &&
+            <button onClick={(e) => handleSignOut(e)}>Sign Out</button>
+          }
+        </div>
       </div>
-    </div>
+    </div >
   );
 }
 
