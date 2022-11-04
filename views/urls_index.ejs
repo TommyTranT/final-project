@@ -8,7 +8,7 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
     integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
-  <title>TinyApp</title>
+  <title>Wishlist</title>
 </head>
 
 <body>
@@ -22,6 +22,7 @@
             <th scope="col">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Item</th>
             <th scope="col">Description</th>
             <th scope="col">Price</th>
+            <th scope="col">Item Image</th>
             <th scope="col">Edit</th>
             <th scope="col">Delete</th>
           </tr>
@@ -44,6 +45,11 @@
               </td>
               <td>
                   <%= urls[id].price %>
+                </td>
+                <td>
+                  <img width="75" height="75" src="
+                  <%= urls[id].img %>" %>
+                  >
                 </td>
               <td>
                 <form method="GET" action="/urls/<%= id %>">

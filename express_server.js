@@ -115,6 +115,8 @@ app.post('/urls', (req, res) => {
   const longURL = req.body.longURL;
   const description = req.body.description;
   const price = req.body.price;
+  const img = req.body.img;
+
 
   if (!longURL) {
 
@@ -131,6 +133,7 @@ app.post('/urls', (req, res) => {
     longURL,
     description,
     price,
+    img,
     userID: req.session["user_id"]
   }
   res.redirect(`/urls`);
