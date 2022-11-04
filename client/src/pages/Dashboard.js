@@ -31,14 +31,14 @@ function Dashboard() {
           Welcome to your Wishlists
         </h1>
         <br />
-        <button>Create A new Wishlist!</button>
+        <a class="fcc-btn" href="/create">Create Wishlist</a>
       </div>
       <div className='WishlistContainer'>
         {
           wishlistComponents
         }
       </div>
-    </div>
+    </div >
   )
 }
 

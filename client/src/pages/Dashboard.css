@@ -1,3 +1,17 @@
 .heading {
   padding: 50px;
 }
+
+
+
+.fcc-btn {
+  background-color:red;
+  color: white;
+  padding: 15px 25px;
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.fcc-btn:hover {
+  background-color: #223094;
+}
