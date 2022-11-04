@@ -1,22 +1,25 @@
-## Final Project Server
-Client is the React app
-Server is the Express app
+# TinyApp Project
 
-# Dependancies
+TinyApp is a full stack web application built with Node and Express that allows users to shorten long URLs (à la bit.ly).
 
-- nodeJS
-- psql
-- axios
+## Final Product
 
-# Installation instructions
+### URLs Page
+!["Screenshot of URLs page"](https://github.com/plettboy/tinyApp/blob/master/docs/urls.png?raw=true)
+### Account Registration
+!["Screenshot of the Registration Page"](https://github.com/plettboy/tinyApp/blob/master/docs/register_page.png?raw=true)
+### Addition of New URL's
+!["screenshot URL Addition Page"](https://github.com/plettboy/tinyApp/blob/master/docs/new_url_page.png?raw=true)
 
-go into server `npm install`
-go into client `npm install`
+## Dependencies
 
-open 2 terminals `npm start`
+- Node.js
+- Express
+- EJS
+- bcryptjs
+- cookie-session
 
-# Database
+## Getting Started
 
-Open psql and make a database called `final`
-run `npm db:rest` to execute schema and seeds. 
-
+- Install all dependencies (using the `npm install` command).
+- Run the development web server using the `node express_server.js` command.
