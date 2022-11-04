@@ -16,11 +16,17 @@
   <%- include('partials/_header') %>
 
     <main style="margin: 1em;">
-      <h3>Create TinyURL</h3>
+      <h3>Add Item</h3>
       <form class="form-inline" action="/urls" method="POST">
         <div class="form-group mb-2">
-          <label for="longURL">Enter a URL:</label>
-          <input class="form-control" type="text" name="longURL" placeholder="http://"
+          <label for="longURL">Enter an Item:</label>
+          <input class="form-control" type="text" name="longURL" placeholder="item"
+            style="width: 300px; margin: 1em" />
+            <br>
+            <input class="form-control" type="text" name="description" placeholder="Description"
+            style="width: 300px; margin: 1em" />
+            <br>
+            <input class="form-control" type="text" name="price" placeholder="Enter a Price"
             style="width: 300px; margin: 1em" />
           <button type="submit" class="btn btn-primary">Submit</button>
         </div>

@@ -5,7 +5,7 @@ const app = express();
 const PORT = 8080; // default port 8080
 
 
-const {generateRandomString, findUserByEmail, getUserFromCookie, getURLSofUser, emailMatch} = require("./helpers.js")
+const { generateRandomString, findUserByEmail, getUserFromCookie, getURLSofUser, emailMatch } = require("./helpers.js")
 console.log(findUserByEmail())
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieSession({
@@ -64,73 +64,76 @@ app.get('/u/:id', (req, res) => {
 app.get('/urls', (req, res) => {
   const userID = (req.session["user_id"])
   const user = getUserFromCookie(userID, users)
-const myURLS = getURLSofUser(userID, urlDatabase)
+  const myURLS = getURLSofUser(userID, urlDatabase)
 
-const templateVars = { urls: myURLS, user }; //to get the username to show up we added the username cookie as a paramter.
+  const templateVars = { urls: myURLS, user }; //to get the username to show up we added the username cookie as a paramter.
 
-if(!userID) {
-  return res.send("You need to login!")
-}
-res.render('urls_index', templateVars);
+  if (!userID) {
+    return res.send("You need to login!")
+  }
+  res.render('urls_index', templateVars);
 });
 
 app.get('/login', (req, res) => {
   if (req.session['user_id']) {
     res.redirect(`/urls`);
-  } 
+  }
 
-  const templateVars = {user: null}
+  const templateVars = { user: null }
   res.render("login", templateVars)
 });
 
 app.post('/login', (req, res) => {
-const email = req.body.email;
-const password = req.body.password;
+  const email = req.body.email;
+  const password = req.body.password;
 
-//error handling, if user and pass are zero return error
-if (email.length === 0 && password.length === 0) {
-  return res.status(400).send(`400 error - Missing E-mail or Password`);
-}
-//if emailmatch is true, then error
-const user = findUserByEmail(email, users)
-if (!user) {
-  return res.status(400).send(`400 error - No user found!`);
-}
-if (!bcrypt.compareSync(password, user.password)) {
-  return res.status(400).send(`400 error - Incorrect email or password!`);
-}
+  //error handling, if user and pass are zero return error
+  if (email.length === 0 && password.length === 0) {
+    return res.status(400).send(`400 error - Missing E-mail or Password`);
+  }
+  //if emailmatch is true, then error
+  const user = findUserByEmail(email, users)
+  if (!user) {
+    return res.status(400).send(`400 error - No user found!`);
+  }
+  if (!bcrypt.compareSync(password, user.password)) {
+    return res.status(400).send(`400 error - Incorrect email or password!`);
+  }
 
-if (user) {
+  if (user) {
 
-  req.session.user_id = user.id
-  res.redirect(`/urls`);
+    req.session.user_id = user.id
+    res.redirect(`/urls`);
 
-} else {
-  res.redirect('/login')
-}
+  } else {
+    res.redirect('/login')
+  }
 })
 
 app.post('/urls', (req, res) => {
   console.log(req.body);
   const longURL = req.body.longURL;
+  const description = req.body.description;
+  const price = req.body.price;
 
   if (!longURL) {
-    
-    return res.status(400).send('Enter valid url!'); 
+
+    return res.status(400).send('Enter valid url!');
   }
 
   const user = getUserFromCookie(req.session["user_id"], users)
-  if(!user) {
-    return res.status(400).send('NO! You are not logged in!'); 
+  if (!user) {
+    return res.status(400).send('NO! You are not logged in!');
   }
 
   const id = generateRandomString();
   urlDatabase[id] = {
     longURL,
+    description,
+    price,
     userID: req.session["user_id"]
   }
-  console.log(urlDatabase);
-  res.redirect(`/urls/${id}`);
+  res.redirect(`/urls`);
 });
 
 app.post('/urls/:id', (req, res) => {
@@ -151,8 +154,8 @@ app.post('/urls/:id/delete', (req, res) => {
 });
 
 app.get('/urls/new', (req, res) => {
-const user = getUserFromCookie(req.session["user_id"], users)
-  if(!user) {
+  const user = getUserFromCookie(req.session["user_id"], users)
+  if (!user) {
     res.redirect('/login')
   }
 
@@ -162,14 +165,14 @@ const user = getUserFromCookie(req.session["user_id"], users)
 
 //this is a get request for a new register page, user name is null and we render the file /register
 app.get('/register', (req, res) => {
-  const templateVars = { user:getUserFromCookie(null, users) };
+  const templateVars = { user: getUserFromCookie(null, users) };
   res.render('register', templateVars);
 });
 
 app.get('/urls/:id', (req, res) => {
   if (!req.session['user_id']) {
     return res.status(403).send(`You are not logged in!`)
-  } 
+  }
 
   const id = req.params.id;
   if (!urlDatabase[id]) {
@@ -187,7 +190,7 @@ app.get('/urls/:id', (req, res) => {
     return res.status(400).send("URL doesn't exist!");
   }
 
-  const templateVars = { id, longURL, user:getUserFromCookie(req.session["user_id"], users) };
+  const templateVars = { id, longURL, user: getUserFromCookie(req.session["user_id"], users) };
   res.render('urls_show', templateVars);
 });
 
@@ -201,7 +204,7 @@ app.get('/hello', (req, res) => {
 
 //clears the username cookie from memory
 app.post("/logout", (req, res) => {
-req.session = null;
+  req.session = null;
   res.redirect("/urls");
 });
 
@@ -217,7 +220,7 @@ app.post('/register', (req, res) => {
     return res.status(400).send(`400 error - Missing E-mail or Password`);
   }
 
-// if emailmatch is true, then error
+  // if emailmatch is true, then error
   if (findUserByEmail(email, users)) {
     return res.status(400).send(`400 error - A new email is required.`);
 
