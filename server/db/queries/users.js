@@ -13,7 +13,7 @@ const getUserById = id => {
 }
 
 const registerNewUser = function(user) {
-  return pool
+  return db
     .query(`
       INSERT INTO users (name, password)
       VALUES ($1, $2)
