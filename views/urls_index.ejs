@@ -23,7 +23,8 @@
             <th scope="col">Description</th>
             <th scope="col">Price</th>
             <th scope="col">Item Image</th>
-            <th scope="col">Edit</th>
+            <th scope="col">Link to Website</th>
+            <th scope="col">Details</th>
             <th scope="col">Delete</th>
           </tr>
         </thead>
@@ -41,7 +42,7 @@
               </td>
               <td>
               <!-- This needs to be linked to the Description inbox, and displayed, via a post, and get -->
-                <%= urls[id].description %>
+                <%= urls[id].description.substring(0,9) %>...
               </td>
               <td>
                   <%= urls[id].price %>
@@ -51,9 +52,15 @@
                   <%= urls[id].img %>" %>
                   >
                 </td>
+                <td>
+                  <a href="
+                  <%= urls[id].link %>
+                  "><%= urls[id].link %></a>
+                  
+                </td>
               <td>
                 <form method="GET" action="/urls/<%= id %>">
-                  <button class="btn btn-outline-primary">Edit</button>
+                  <button class="btn btn-outline-primary">Details</button>
                 </form>
               </td>
               <td>

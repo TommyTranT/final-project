@@ -116,6 +116,7 @@ app.post('/urls', (req, res) => {
   const description = req.body.description;
   const price = req.body.price;
   const img = req.body.img;
+  const link = req.body.link;
 
 
   if (!longURL) {
@@ -134,7 +135,8 @@ app.post('/urls', (req, res) => {
     description,
     price,
     img,
-    userID: req.session["user_id"]
+    userID: req.session["user_id"],
+    link
   }
   res.redirect(`/urls`);
 });
@@ -193,7 +195,12 @@ app.get('/urls/:id', (req, res) => {
     return res.status(400).send("URL doesn't exist!");
   }
 
-  const templateVars = { id, longURL, user: getUserFromCookie(req.session["user_id"], users) };
+  const description = urlDatabase[id].description;
+  const img = urlDatabase[id].img;
+  const price = urlDatabase[id].price;
+  const link = urlDatabase[id].link;
+
+  const templateVars = { id, longURL, description, price, link, img, user: getUserFromCookie(req.session["user_id"], users) };
   res.render('urls_show', templateVars);
 });
 
