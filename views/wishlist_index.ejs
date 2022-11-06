@@ -40,7 +40,7 @@
         </g>
       </svg>
       <img src="/public/images/custom-list-high-resolution-logo-white-on-transparent-background.png"
-      style="width: 25rem;">
+      style="width: 23rem;">
     </div>
 
     <!--Waves Container-->
@@ -89,42 +89,24 @@
     <main style="margin: 1em;">
       <h3>My Wishlist</h3>
       
-        
           <% for (let id in wishlist) { %>
-            
-            
-
-              
-                <div class="card" style="width: 18rem;">
+            <div class="squares">
+              <div class="card" style="width: 18rem; margin-right: 1rem;">
+                <a href="/wishlist/<%= id %>">
                   <img class="card-img-top" src="
                   <%= wishlist[id].img %>" %>
                   >
-                  <div class="card-body">
-                    <h5 class="card-title"><%= wishlist[id].longURL %></h5>
-                    <h6 class="card-text">$<%= wishlist[id].price %></h6>
-                    <p class="card-text"><%= wishlist[id].description%></p>
-                    <form method="GET" action="<%= wishlist[id].link %>">
-                      <button class="btn btn-outline-primary">Link</button>
-                    </form>
-                    <form method="GET" action="/wishlist/<%= id %>">
-                      <button class="btn btn-outline-primary">Details</button>
-                    </form>
-                    <form method="POST" action="/wishlist/<%= id %>/delete">
-                      <button class="btn btn-outline-danger">Remove</button>
-                    </form>
-                  </div>
-                  
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                  <label class="form-check-label" for="flexCheckDefault">
-                
-              
-                  
-                
-              
-          
-            <% } %>
-      
-      </table>
+                </a>
+                <div class="card-body">
+                  <h5 class="card-title"><%= wishlist[id].longURL %></h5>
+                  <h6 class="card-text">$<%= wishlist[id].price %></h6>
+                  <form method="POST" action="/wishlist/<%= id %>/delete">
+                    <button class="btn btn-outline-danger">Remove</button>
+                  </form>
+                </div>
+              </div>
+          <% } %>
+
     </main>
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
