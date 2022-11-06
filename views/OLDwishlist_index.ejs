@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
+  <title>Wishlist</title>
+</head>
+
+<body>
+  <%- include('partials/_header') %>
+
+    <main style="margin: 1em;">
+      <h3>My Wishlist</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Item</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+            <th scope="col">Item Image</th>
+            <th scope="col">Link to Website</th>
+            <th scope="col">Details</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (let id in wishlist) { %>
+            
+            <tr>
+
+              <td>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                  <label class="form-check-label" for="flexCheckDefault">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <%= wishlist[id].longURL %>
+              </td>
+              <td>
+              <!-- This needs to be linked to the Description inbox, and displayed, via a post, and get -->
+                <%= wishlist[id].description.substring(0,9) %>...
+              </td>
+              <td>
+                  <%= wishlist[id].price %>
+                </td>
+                <td>
+                  <img width="75" height="75" src="
+                  <%= wishlist[id].img %>" %>
+                  >
+                </td>
+                <td>
+                  <a href="
+                  <%= wishlist[id].link %>
+                  "><%= wishlist[id].link %></a>
+                  
+                </td>
+              <td>
+                <form method="GET" action="/wishlist/<%= id %>">
+                  <button class="btn btn-outline-primary">Details</button>
+                </form>
+              </td>
+              <td>
+                <form method="POST" action="/wishlist/<%= id %>/delete">
+                  <button class="btn btn-outline-danger">Delete</button>
+                </form>
+              </td>
+            </tr>
+            <% } %>
+        </tbody>
+      </table>
+    </main>
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"></script>
+</body>
+
+</html>
