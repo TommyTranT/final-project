@@ -24,7 +24,7 @@
       </div>
     </div>
     <% if (user) { %>
-    <div class="mr-3">Logged in as: <%= user["email"] %></div>
+    <div class="mr-3" style="color:rgb(208,208,208)">User: <%= user["email"] %></div>
     <form method="POST" action="/logout">
       <button type="submit" class="btn btn-outline-dark">Logout</button>
     </form>

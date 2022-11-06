@@ -80,7 +80,8 @@ app.get("/wishlist", (req, res) => {
   const templateVars = { wishlist: mywishlist, user }; //to get the username to show up we added the username cookie as a paramter.
 
   if (!userID) {
-    return res.send("You need to login!");
+    // return res.send("You need to login!");
+    res.redirect('/login')
   }
   res.render("wishlist_index", templateVars);
 });
