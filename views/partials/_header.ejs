@@ -1,27 +1,33 @@
 <header>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <a class="navbar-brand" href="/urls">Wishlist</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" href="/wishlist">Wishlist</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-item nav-link" href="/urls">My Wishlist</a>
-        <a class="nav-item nav-link" href="/urls/new">Add New Items</a>
+        <a class="nav-item nav-link" href="/wishlist">My Wishlist</a>
+        <a class="nav-item nav-link" href="/wishlist/new">Add New Items</a>
       </div>
     </div>
     <% if (user) { %>
-      <div class="mr-3">Logged in as: <%= user["email"] %>
-      </div>
-      <form method="POST" action="/logout">
-        <button type="submit" class="btn btn-outline-dark">Logout</button>
-      </form>
-      <% } else { %>
-        <div class="navbar-nav">
-          <a class="nav-item nav-link" href="/login">Login</a>
-          <a class="nav-item nav-link" href="/register">Register</a>
-        </div>
-        <% } %>
+    <div class="mr-3">Logged in as: <%= user["email"] %></div>
+    <form method="POST" action="/logout">
+      <button type="submit" class="btn btn-outline-dark">Logout</button>
+    </form>
+    <% } else { %>
+    <div class="navbar-nav">
+      <a class="nav-item nav-link" href="/login">Login</a>
+      <a class="nav-item nav-link" href="/register">Register</a>
+    </div>
+    <% } %>
   </nav>
 </header>

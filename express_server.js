@@ -1,18 +1,29 @@
-const express = require('express');
-const cookieSession = require('cookie-session');
+const express = require("express");
+const cookieSession = require("cookie-session");
 const bcrypt = require("bcryptjs");
 const app = express();
 const PORT = 8080; // default port 8080
 
+const {
+  generateRandomString,
+  findUserByEmail,
+  getUserFromCookie,
+  getwishlistofUser,
+  emailMatch,
+} = require("./helpers.js");
+console.log(findUserByEmail());
 
-const { generateRandomString, findUserByEmail, getUserFromCookie, getURLSofUser, emailMatch } = require("./helpers.js")
-console.log(findUserByEmail())
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieSession({
-  name: 'session',
-  keys: ['secretkey'],
-}))
-app.set('view engine', 'ejs');
+// app.use('/assets', express.static('assets'))
+app.use(
+  cookieSession({
+    name: "session",
+    keys: ["secretkey"],
+  })
+);
+// app.use(express.static("public"));
+app.use(express.static(__dirname));
+app.set("view engine", "ejs");
 
 //our updated database
 const urlDatabase = {
@@ -44,13 +55,13 @@ const users = {
 };
 
 //this is simply the example page
-app.get('/', (req, res) => {
-  res.send('Hello!');
+app.get("/", (req, res) => {
+  res.send("Hello!");
 });
 
-app.get('/u/:id', (req, res) => {
-  // incorrect id entered, so we send an error 
-  console.log(req)
+app.get("/u/:id", (req, res) => {
+  // incorrect id entered, so we send an error
+  console.log(req);
   const id = req.params.id;
   const urlID = urlDatabase[id];
   if (!urlID) {
@@ -58,32 +69,32 @@ app.get('/u/:id', (req, res) => {
   }
   const longURL = urlDatabase[req.params.id].longURL;
   res.redirect(longURL);
-})
+});
 
 //whenever we see app.get and then a render request we are asking html to render the html webpage.
-app.get('/urls', (req, res) => {
-  const userID = (req.session["user_id"])
-  const user = getUserFromCookie(userID, users)
-  const myURLS = getURLSofUser(userID, urlDatabase)
+app.get("/wishlist", (req, res) => {
+  const userID = req.session["user_id"];
+  const user = getUserFromCookie(userID, users);
+  const mywishlist = getwishlistofUser(userID, urlDatabase);
 
-  const templateVars = { urls: myURLS, user }; //to get the username to show up we added the username cookie as a paramter.
+  const templateVars = { wishlist: mywishlist, user }; //to get the username to show up we added the username cookie as a paramter.
 
   if (!userID) {
-    return res.send("You need to login!")
+    return res.send("You need to login!");
   }
-  res.render('urls_index', templateVars);
+  res.render("wishlist_index", templateVars);
 });
 
-app.get('/login', (req, res) => {
-  if (req.session['user_id']) {
-    res.redirect(`/urls`);
+app.get("/login", (req, res) => {
+  if (req.session["user_id"]) {
+    res.redirect(`/wishlist`);
   }
 
-  const templateVars = { user: null }
-  res.render("login", templateVars)
+  const templateVars = { user: null };
+  res.render("login", templateVars);
 });
 
-app.post('/login', (req, res) => {
+app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
@@ -92,7 +103,7 @@ app.post('/login', (req, res) => {
     return res.status(400).send(`400 error - Missing E-mail or Password`);
   }
   //if emailmatch is true, then error
-  const user = findUserByEmail(email, users)
+  const user = findUserByEmail(email, users);
   if (!user) {
     return res.status(400).send(`400 error - No user found!`);
   }
@@ -101,16 +112,14 @@ app.post('/login', (req, res) => {
   }
 
   if (user) {
-
-    req.session.user_id = user.id
-    res.redirect(`/urls`);
-
+    req.session.user_id = user.id;
+    res.redirect(`/wishlist`);
   } else {
-    res.redirect('/login')
+    res.redirect("/login");
   }
-})
+});
 
-app.post('/urls', (req, res) => {
+app.post("/wishlist", (req, res) => {
   console.log(req.body);
   const longURL = req.body.longURL;
   const description = req.body.description;
@@ -118,15 +127,13 @@ app.post('/urls', (req, res) => {
   const img = req.body.img;
   const link = req.body.link;
 
-
   if (!longURL) {
-
-    return res.status(400).send('Enter valid url!');
+    return res.status(400).send("Enter valid url!");
   }
 
-  const user = getUserFromCookie(req.session["user_id"], users)
+  const user = getUserFromCookie(req.session["user_id"], users);
   if (!user) {
-    return res.status(400).send('NO! You are not logged in!');
+    return res.status(400).send("NO! You are not logged in!");
   }
 
   const id = generateRandomString();
@@ -136,18 +143,17 @@ app.post('/urls', (req, res) => {
     price,
     img,
     userID: req.session["user_id"],
-    link
-  }
-  res.redirect(`/urls`);
+    link,
+  };
+  res.redirect(`/wishlist`);
 });
 
-app.post('/urls/:id', (req, res) => {
+app.post("/wishlist/:id", (req, res) => {
   urlDatabase[req.params.id].longURL = req.body.longURL;
-  res.redirect(`/urls`);
-})
+  res.redirect(`/wishlist`);
+});
 
-app.post('/urls/:id/delete', (req, res) => {
-
+app.post("/wishlist/:id/delete", (req, res) => {
   // if user doesn't own url
   if (urlDatabase[req.params.id].userID !== req.session.user_id) {
     return res.status(403).send(`You don't own that URL.`);
@@ -155,38 +161,38 @@ app.post('/urls/:id/delete', (req, res) => {
 
   delete urlDatabase[req.params.id];
   //once you delete, redirect to the url page
-  res.redirect(`/urls`);
+  res.redirect(`/wishlist`);
 });
 
-app.get('/urls/new', (req, res) => {
-  const user = getUserFromCookie(req.session["user_id"], users)
+app.get("/wishlist/new", (req, res) => {
+  const user = getUserFromCookie(req.session["user_id"], users);
   if (!user) {
-    res.redirect('/login')
+    res.redirect("/login");
   }
 
   const templateVars = { user };
-  res.render('urls_new', templateVars);
+  res.render("wishlist_new", templateVars);
 });
 
 //this is a get request for a new register page, user name is null and we render the file /register
-app.get('/register', (req, res) => {
+app.get("/register", (req, res) => {
   const templateVars = { user: getUserFromCookie(null, users) };
-  res.render('register', templateVars);
+  res.render("register", templateVars);
 });
 
-app.get('/urls/:id', (req, res) => {
-  if (!req.session['user_id']) {
-    return res.status(403).send(`You are not logged in!`)
+app.get("/wishlist/:id", (req, res) => {
+  if (!req.session["user_id"]) {
+    return res.status(403).send(`You are not logged in!`);
   }
 
   const id = req.params.id;
   if (!urlDatabase[id]) {
-    return res.status(403).send(`ID not present in database!`)
+    return res.status(403).send(`ID not present in database!`);
   }
 
-  let urlsOfUser = getURLSofUser(req.session['user_id'], urlDatabase)
-  if (!urlsOfUser[id]) {
-    return res.status(403).send(`You do not own this ID!`)
+  let wishlistOfUser = getwishlistofUser(req.session["user_id"], urlDatabase);
+  if (!wishlistOfUser[id]) {
+    return res.status(403).send(`You do not own this ID!`);
   }
 
   const longURL = urlDatabase[id].longURL;
@@ -200,26 +206,34 @@ app.get('/urls/:id', (req, res) => {
   const price = urlDatabase[id].price;
   const link = urlDatabase[id].link;
 
-  const templateVars = { id, longURL, description, price, link, img, user: getUserFromCookie(req.session["user_id"], users) };
-  res.render('urls_show', templateVars);
+  const templateVars = {
+    id,
+    longURL,
+    description,
+    price,
+    link,
+    img,
+    user: getUserFromCookie(req.session["user_id"], users),
+  };
+  res.render("wishlist_show", templateVars);
 });
 
-app.get('/urls.json', (req, res) => {
+app.get("/wishlist.json", (req, res) => {
   res.json(urlDatabase);
 });
 
-app.get('/hello', (req, res) => {
-  res.send('<html><body>Hello!<b>World</b></body></html>\n');
+app.get("/hello", (req, res) => {
+  res.send("<html><body>Hello!<b>World</b></body></html>\n");
 });
 
 //clears the username cookie from memory
 app.post("/logout", (req, res) => {
   req.session = null;
-  res.redirect("/urls");
+  res.redirect("/wishlist");
 });
 
 // this connects the forms in register.ejs to our server
-app.post('/register', (req, res) => {
+app.post("/register", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
@@ -233,18 +247,16 @@ app.post('/register', (req, res) => {
   // if emailmatch is true, then error
   if (findUserByEmail(email, users)) {
     return res.status(400).send(`400 error - A new email is required.`);
-
   }
 
-  const id = generateRandomString()
-
+  const id = generateRandomString();
 
   //hashed passowrd added in to the password property
-  const user = { email, password: hashedPassword, id }
+  const user = { email, password: hashedPassword, id };
 
   users[id] = user;
   req.session.user_id = id;
-  res.redirect(`/urls`);
+  res.redirect(`/wishlist`);
 });
 
 app.listen(PORT, () => {
